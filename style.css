@@ -1,0 +1,75 @@
+:root {
+    --bg-light: #f8fafc;
+    --bg-dark: #0f172a;
+}
+
+body {
+    background-color: var(--bg-light);
+    font-family: 'Inter', sans-serif;
+}
+
+/* Dark Mode Overrides */
+.dark body {
+    background-color: var(--bg-dark);
+}
+
+.card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.dark .card {
+    background: #1e293b;
+    border-color: #334155;
+    color: white;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.header-gradient {
+    background: linear-gradient(to right, #1e293b, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.dark .header-gradient {
+    background: linear-gradient(to right, #f8fafc, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.kpi-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+}
+
+.kpi-value {
+    font-size: 2.25rem;
+    font-weight: 900;
+    margin-top: 0.5rem;
+}
+
+.chart-title {
+    font-weight: 700;
+    color: #475569;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+}
+
+.dark .chart-title {
+    color: #cbd5e1;
+}
+
+.chart-container {
+    height: 250px;
+    position: relative;
+}
