@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noa Protein | Interactive Dashboard</title>
+    
+    <link rel="stylesheet" href="sty.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+</head>
+<body class="p-4 md:p-10">
+
+    <div class="max-w-6xl mx-auto">
+        <header class="mb-12 text-center md:text-left">
+            <h1 class="text-4xl md:text-5xl font-black mb-2">Noa Protein Analysis</h1>
+            <p class="text-slate-500 font-medium">Real-time Consumer Testing Insights</p>
+        </header>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+            <div class="card border-t-4 border-blue-500">
+                <span class="text-xs uppercase font-bold text-slate-400 tracking-widest">Total Responses</span>
+                <div class="kpi-value text-3xl md:text-4xl mt-2">37</div>
+            </div>
+            <div class="card border-t-4 border-emerald-500">
+                <span class="text-xs uppercase font-bold text-slate-400 tracking-widest">Taste Avg</span>
+                <div class="kpi-value text-3xl md:text-4xl mt-2">2.84</div>
+            </div>
+            <div class="card border-t-4 border-violet-500">
+                <span class="text-xs uppercase font-bold text-slate-400 tracking-widest">Texture Avg</span>
+                <div class="kpi-value text-3xl md:text-4xl mt-2">3.27</div>
+            </div>
+            <div class="card border-t-4 border-amber-500">
+                <span class="text-xs uppercase font-bold text-slate-400 tracking-widest">Buy Intent</span>
+                <div class="kpi-value text-3xl md:text-4xl mt-2">2.68</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="card">
+                <h3 class="font-bold text-slate-700 mb-6 text-base uppercase tracking-tight">Noa vs Other brand</h3>
+                <div class="chart-container"><canvas id="compChart"></canvas></div>
+            </div>
+            <div class="card">
+                <h3 class="font-bold text-slate-700 mb-6 text-base uppercase tracking-tight">Consumption Frequency</h3>
+                <div class="chart-container"><canvas id="freqChart"></canvas></div>
+            </div>
+            <div class="card">
+                <h3 class="font-bold text-slate-700 mb-6 text-base uppercase tracking-tight">Current Preferences</h3>
+                <div class="chart-container"><canvas id="proteinChart"></canvas></div>
+            </div>
+            <div class="card">
+                <h3 class="font-bold text-slate-700 mb-6 text-base uppercase tracking-tight">Taste Distribution</h3>
+                <div class="chart-container"><canvas id="tasteChart"></canvas></div>
+            </div>
+            <div class="card">
+                <h3 class="font-bold text-slate-700 mb-6 text-base uppercase tracking-tight">Texture Distribution</h3>
+                <div class="chart-container"><canvas id="textureChart"></canvas></div>
+            </div>
+            <div class="card">
+                <h3 class="font-bold text-slate-700 mb-6 text-base uppercase tracking-tight">Pricing Sweet Spot</h3>
+                <div class="chart-container"><canvas id="priceChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart Config (Matches the mobile settings from before)
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.responsive = true;
+        Chart.defaults.maintainAspectRatio = false;
+
+        const setupChart = (id, type, labels, data, colors, isHorizontal = false) => {
+            new Chart(document.getElementById(id), {
+                type: type,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors,
+                        borderRadius: 8,
+                        hoverOffset: 15 // Animation on hover for pie/doughnut
+                    }]
+                },
+                options: {
+                    indexAxis: isHorizontal ? 'y' : 'x',
+                    plugins: { 
+                        legend: { display: type === 'pie' || type === 'doughnut', position: 'bottom' } 
+                    },
+                    scales: (type === 'bar') ? {
+                        y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+                        x: { grid: { display: false } }
+                    } : {}
+                }
+            });
+        };
+
+        // Initialize with same data
+        setupChart('compChart', 'doughnut', ['Worse', 'Same', 'Better'], [19, 10, 8], ['#f43f5e', '#94a3b8', '#10b981']);
+        setupChart('freqChart', 'pie', ['Daily', 'Occasional', '3-5d', '1-2d', 'Never'], [14, 13, 4, 3, 3], ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444']);
+        setupChart('proteinChart', 'bar', ['Isolate', 'Conc.', 'Plant', 'Egg', 'Soy'], [14, 8, 6, 4, 3], '#6366f1', true);
+        setupChart('tasteChart', 'bar', ['1', '2', '3', '4'], [5, 7, 14, 11], '#10b981');
+        setupChart('textureChart', 'bar', ['1', '2', '3', '4', '5'], [3, 6, 13, 8, 7], '#8b5cf6');
+        setupChart('priceChart', 'bar', ['<1.5k', '1.5-2k', '2-2.5k', '2.5-3k', '>3k'], [12, 20, 2, 2, 1], '#f59e0b');
+    </script>
+</body>
+</html>
